@@ -72,7 +72,10 @@
       WWStay Technologies is a holding company building products and platforms
       at the intersection of travel, hospitality, and technology.
     </p>
-    <footer>&copy; <script>document.write(new Date().getFullYear())</script> WWStay Technologies. All rights reserved.</footer>
+    <footer role="contentinfo">
+      <p>&copy; <span id="year"></span> WWStay Technologies. All rights reserved.</p>
+    </footer>
+    <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
   </div>
 </body>
 </html>
