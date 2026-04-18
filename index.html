@@ -4,78 +4,694 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>WWStay Technologies</title>
+  <meta name="description" content="WWStay Technologies — a technology holding company. Home of zovv.ai." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600&family=IBM+Plex+Mono:wght@300;400&family=Fraunces:ital,opsz,wght@0,9..144,300;1,9..144,300;1,9..144,400&display=swap" rel="stylesheet" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
+    :root {
+      --bg:            #f4f3f0;
+      --bg-mid:        #eceae5;
+      --bg-card:       #ffffff;
+      --bg-card-alt:   #f9f8f6;
+      --border:        rgba(30, 28, 24, 0.09);
+      --border-md:     rgba(30, 28, 24, 0.16);
+      --border-strong: rgba(30, 28, 24, 0.25);
+      --ink:           #161512;
+      --ink-mid:       #3d3b36;
+      --ink-muted:     #86837a;
+      --ink-faint:     #b5b2aa;
+      --orange:        #e8500a;
+      --orange-light:  #ff6b2b;
+      --orange-bg:     rgba(232, 80, 10, 0.07);
+      --graphite:      #2c2b28;
+    }
+
+    html { scroll-behavior: smooth; }
+
     body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-      background: #0a0a0a;
-      color: #f0f0f0;
+      background: var(--bg);
+      color: var(--ink);
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 300;
+      font-size: 16px;
+      line-height: 1.65;
       min-height: 100vh;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Subtle dot grid — engineering feel */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: radial-gradient(circle, rgba(30,28,24,0.12) 1px, transparent 1px);
+      background-size: 28px 28px;
+      pointer-events: none;
+      z-index: 0;
+      mask-image: linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.4) 15%, rgba(0,0,0,0.4) 85%, transparent 100%);
+      -webkit-mask-image: linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.4) 15%, rgba(0,0,0,0.4) 85%, transparent 100%);
+    }
+
+    .page {
+      position: relative;
+      z-index: 1;
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 0 36px;
+    }
+
+    /* ── Header ── */
+    header {
       display: flex;
-      flex-direction: column;
       align-items: center;
-      justify-content: center;
+      justify-content: space-between;
+      padding: 36px 0 0;
+      opacity: 0;
+      animation: fadeUp 0.7s ease forwards 0.05s;
     }
 
-    .container {
-      text-align: center;
-      padding: 2rem;
-      max-width: 640px;
+    .logo-mark {
+      display: flex;
+      align-items: center;
+      gap: 0;
     }
 
-    .logo {
-      font-size: 3rem;
-      font-weight: 800;
-      letter-spacing: -1px;
-      color: #ffffff;
-      margin-bottom: 0.5rem;
+    .logo-ww {
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 600;
+      font-size: 20px;
+      letter-spacing: -0.03em;
+      color: var(--graphite);
     }
 
-    .logo span {
-      color: #4f8ef7;
+    .logo-stay {
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 300;
+      font-size: 20px;
+      letter-spacing: -0.01em;
+      color: var(--ink-mid);
     }
 
-    .tagline {
-      font-size: 1.1rem;
-      color: #888;
-      margin-bottom: 2.5rem;
+    .logo-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--orange);
+      margin: 0 2px 0 1px;
+      position: relative;
+      top: -4px;
     }
 
-    .divider {
-      width: 48px;
-      height: 3px;
-      background: #4f8ef7;
+    .logo-tech {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 9px;
+      font-weight: 300;
+      letter-spacing: 0.18em;
+      color: var(--ink-faint);
+      text-transform: uppercase;
+      margin-left: 12px;
+      border-left: 1px solid var(--border-md);
+      padding-left: 12px;
+    }
+
+    nav {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    nav a {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 13px;
+      font-weight: 400;
+      letter-spacing: 0.01em;
+      color: var(--ink-muted);
+      text-decoration: none;
+      padding: 7px 14px;
+      border-radius: 4px;
+      transition: background 0.15s, color 0.15s;
+    }
+    nav a:hover {
+      background: var(--bg-mid);
+      color: var(--ink);
+    }
+
+    nav .nav-cta {
+      background: var(--orange);
+      color: #fff;
+      font-weight: 500;
+      border-radius: 4px;
+      padding: 7px 16px;
+      transition: background 0.15s, transform 0.15s;
+    }
+    nav .nav-cta:hover {
+      background: var(--orange-light);
+      color: #fff;
+      transform: translateY(-1px);
+    }
+
+    /* ── Divider ── */
+    .rule {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 24px 0;
+    }
+
+    /* ── Ticker / breadcrumb bar ── */
+    .topbar {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      padding: 12px 0;
+      opacity: 0;
+      animation: fadeUp 0.7s ease forwards 0.15s;
+    }
+
+    .topbar-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 10.5px;
+      font-weight: 300;
+      color: var(--ink-faint);
+      letter-spacing: 0.06em;
+    }
+
+    .topbar-item .dot {
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: var(--orange);
+      opacity: 0.6;
+    }
+
+    .topbar-sep {
+      width: 1px;
+      height: 14px;
+      background: var(--border-md);
+    }
+
+    /* ── Hero ── */
+    .hero {
+      padding: 80px 0 64px;
+      opacity: 0;
+      animation: fadeUp 0.8s ease forwards 0.2s;
+    }
+
+    .hero-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--orange-bg);
+      border: 1px solid rgba(232, 80, 10, 0.18);
+      border-radius: 3px;
+      padding: 5px 12px;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 10.5px;
+      font-weight: 400;
+      letter-spacing: 0.14em;
+      color: var(--orange);
+      text-transform: uppercase;
+      margin-bottom: 28px;
+    }
+
+    .hero-eyebrow::before {
+      content: '';
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: var(--orange);
+    }
+
+    .hero-headline {
+      font-family: 'Fraunces', serif;
+      font-size: clamp(48px, 6.5vw, 80px);
+      font-weight: 300;
+      line-height: 1.05;
+      letter-spacing: -0.02em;
+      color: var(--ink);
+      max-width: 700px;
+    }
+
+    .hero-headline em {
+      font-style: italic;
+      color: var(--orange);
+    }
+
+    .hero-headline .line2 {
+      display: block;
+      color: var(--ink-mid);
+    }
+
+    .hero-body {
+      margin-top: 28px;
+      max-width: 480px;
+      font-size: 16.5px;
+      font-weight: 300;
+      color: var(--ink-mid);
+      line-height: 1.75;
+    }
+
+    .hero-actions {
+      margin-top: 36px;
+      display: flex;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .btn-primary {
+      background: var(--graphite);
+      color: #fff;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 14px;
+      font-weight: 500;
+      padding: 11px 22px;
+      border-radius: 4px;
+      text-decoration: none;
+      letter-spacing: 0.01em;
+      transition: background 0.15s, transform 0.15s;
+    }
+    .btn-primary:hover { background: var(--ink); transform: translateY(-1px); }
+
+    .btn-ghost {
+      color: var(--ink-muted);
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 14px;
+      font-weight: 400;
+      padding: 11px 20px;
+      border-radius: 4px;
+      text-decoration: none;
+      border: 1px solid var(--border-md);
+      transition: border-color 0.15s, color 0.15s, background 0.15s;
+    }
+    .btn-ghost:hover {
+      border-color: var(--border-strong);
+      color: var(--ink);
+      background: var(--bg-mid);
+    }
+
+    /* ── Stats strip ── */
+    .stats-strip {
+      display: flex;
+      gap: 0;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      overflow: hidden;
+      background: var(--bg-card);
+      margin: 64px 0;
+      opacity: 0;
+      animation: fadeUp 0.8s ease forwards 0.35s;
+    }
+
+    .stat {
+      flex: 1;
+      padding: 20px 24px;
+      border-right: 1px solid var(--border);
+    }
+    .stat:last-child { border-right: none; }
+
+    .stat-num {
+      font-family: 'Fraunces', serif;
+      font-size: 32px;
+      font-weight: 300;
+      color: var(--ink);
+      line-height: 1;
+      letter-spacing: -0.02em;
+    }
+
+    .stat-num span {
+      color: var(--orange);
+      font-size: 22px;
+    }
+
+    .stat-label {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 10px;
+      font-weight: 300;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--ink-faint);
+      margin-top: 6px;
+    }
+
+    /* ── Products ── */
+    .products {
+      padding: 0 0 72px;
+      opacity: 0;
+      animation: fadeUp 0.8s ease forwards 0.45s;
+    }
+
+    .section-label {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 10px;
+      font-weight: 400;
+      letter-spacing: 0.28em;
+      color: var(--ink-faint);
+      text-transform: uppercase;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .section-label::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+
+    .products-grid {
+      display: grid;
+      grid-template-columns: 3fr 2fr;
+      gap: 14px;
+    }
+
+    @media (max-width: 640px) {
+      .products-grid { grid-template-columns: 1fr; }
+      .stats-strip { flex-direction: column; }
+      .stat { border-right: none; border-bottom: 1px solid var(--border); }
+      .stat:last-child { border-bottom: none; }
+    }
+
+    .product-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 32px 30px 30px;
+      text-decoration: none;
+      color: inherit;
+      display: block;
+      position: relative;
+      overflow: hidden;
+      transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
+    }
+
+    .product-card .card-corner {
+      position: absolute;
+      top: 0; right: 0;
+      width: 0; height: 0;
+      border-style: solid;
+      border-width: 0 32px 32px 0;
+      border-color: transparent var(--bg) transparent transparent;
+      transition: border-color 0.2s;
+    }
+
+    .product-card:hover {
+      border-color: var(--orange);
+      box-shadow: 0 0 0 1px var(--orange), 0 8px 32px rgba(232,80,10,0.08);
+      transform: translateY(-2px);
+    }
+
+    .product-card:hover .card-corner {
+      border-color: transparent var(--orange-bg) transparent transparent;
+    }
+
+    .product-card.future {
+      background: var(--bg-mid);
+      border-style: dashed;
+      opacity: 0.5;
+      cursor: default;
+      pointer-events: none;
+    }
+
+    .product-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 9.5px;
+      font-weight: 400;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--orange);
+      background: var(--orange-bg);
+      border: 1px solid rgba(232,80,10,0.15);
       border-radius: 2px;
-      margin: 0 auto 2.5rem;
+      padding: 3px 8px;
+      margin-bottom: 18px;
     }
 
-    .description {
-      font-size: 1rem;
+    .product-badge.neutral {
+      color: var(--ink-muted);
+      background: var(--bg-mid);
+      border-color: var(--border);
+    }
+
+    .product-name {
+      font-family: 'Fraunces', serif;
+      font-size: 42px;
+      font-weight: 300;
+      line-height: 1;
+      color: var(--ink);
+      letter-spacing: -0.025em;
+    }
+
+    .product-name .tld {
+      color: var(--orange);
+    }
+
+    .product-desc {
+      margin-top: 14px;
+      font-size: 14px;
+      font-weight: 300;
+      color: var(--ink-mid);
       line-height: 1.7;
-      color: #aaa;
     }
 
+    .product-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      margin-top: 24px;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--orange);
+      text-decoration: none;
+      letter-spacing: 0.01em;
+      transition: gap 0.2s;
+    }
+
+    .product-card:hover .product-link { gap: 10px; }
+
+    /* ── Philosophy ── */
+    .mission {
+      padding: 0 0 80px;
+      opacity: 0;
+      animation: fadeUp 0.8s ease forwards 0.55s;
+    }
+
+    .mission-inner {
+      background: var(--graphite);
+      border-radius: 4px;
+      padding: 48px 52px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .mission-inner::before {
+      content: '"';
+      position: absolute;
+      top: -20px;
+      left: 40px;
+      font-family: 'Fraunces', serif;
+      font-size: 160px;
+      font-weight: 300;
+      color: rgba(255,255,255,0.04);
+      line-height: 1;
+      pointer-events: none;
+    }
+
+    .mission-inner::after {
+      content: '';
+      position: absolute;
+      top: 0; right: 0;
+      width: 200px; height: 200px;
+      background: radial-gradient(circle at top right, rgba(232,80,10,0.12), transparent 70%);
+      pointer-events: none;
+    }
+
+    .mission-text {
+      font-family: 'Fraunces', serif;
+      font-size: clamp(19px, 2.4vw, 26px);
+      font-weight: 300;
+      font-style: italic;
+      line-height: 1.6;
+      color: rgba(255,255,255,0.88);
+      max-width: 620px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .mission-attr {
+      margin-top: 24px;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 10.5px;
+      letter-spacing: 0.12em;
+      color: rgba(255,255,255,0.3);
+      position: relative;
+      z-index: 1;
+    }
+
+    /* ── Footer ── */
     footer {
-      margin-top: 3rem;
-      font-size: 0.8rem;
-      color: #555;
+      border-top: 1px solid var(--border);
+      padding: 28px 0 40px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 14px;
+      opacity: 0;
+      animation: fadeUp 0.8s ease forwards 0.65s;
+    }
+
+    .footer-left {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 10.5px;
+      color: var(--ink-faint);
+      letter-spacing: 0.06em;
+    }
+
+    .footer-right {
+      display: flex;
+      gap: 20px;
+    }
+
+    .footer-right a {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 12.5px;
+      font-weight: 400;
+      color: var(--ink-muted);
+      text-decoration: none;
+      transition: color 0.15s;
+    }
+    .footer-right a:hover { color: var(--ink); }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(14px); }
+      to   { opacity: 1; transform: translateY(0); }
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <div class="logo">WW<span>Stay</span></div>
-    <p class="tagline">Technologies</p>
-    <div class="divider"></div>
-    <p class="description">
-      WWStay Technologies is a holding company building products and platforms
-      at the intersection of travel, hospitality, and technology.
-    </p>
-    <footer role="contentinfo">
-      <p>&copy; <span id="year"></span> WWStay Technologies. All rights reserved.</p>
-    </footer>
-    <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
+<div class="page">
+
+  <!-- Header -->
+  <header>
+    <div class="logo-mark">
+      <span class="logo-ww">WW</span><span class="logo-stay">Stay</span>
+      <span class="logo-dot"></span>
+      <span class="logo-tech">Technologies</span>
+    </div>
+    <nav>
+      <a href="mailto:hello@wwstay.tech">Contact</a>
+      <a class="nav-cta" href="https://zovv.ai" target="_blank" rel="noopener">zovv.ai ↗</a>
+    </nav>
+  </header>
+
+  <hr class="rule" />
+
+  <!-- Topbar -->
+  <div class="topbar">
+    <div class="topbar-item"><span class="dot"></span>wwstay.tech</div>
+    <div class="topbar-sep"></div>
+    <div class="topbar-item">Technology Holding Company</div>
+    <div class="topbar-sep"></div>
+    <div class="topbar-item">India</div>
   </div>
+
+  <hr class="rule" />
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero-eyebrow">WWStay Technologies</div>
+    <h1 class="hero-headline">
+      Building <em>products</em>
+      <span class="line2">that endure.</span>
+    </h1>
+    <p class="hero-body">
+      WWStay Technologies is a technology holding company. We incubate and grow focused products — each independent, each purposeful — bound by a shared commitment to craft and long-term thinking.
+    </p>
+    <div class="hero-actions">
+      <a class="btn-primary" href="https://zovv.ai" target="_blank" rel="noopener">Visit zovv.ai</a>
+      <a class="btn-ghost" href="mailto:hello@wwstay.tech">Get in touch</a>
+    </div>
+  </section>
+
+  <!-- Stats strip -->
+  <div class="stats-strip">
+    <div class="stat">
+      <div class="stat-num">1<span>+</span></div>
+      <div class="stat-label">Products live</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">AI<span>↗</span></div>
+      <div class="stat-label">Core focus</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">∞</div>
+      <div class="stat-label">Room to grow</div>
+    </div>
+  </div>
+
+  <!-- Products -->
+  <section class="products">
+    <p class="section-label">Portfolio</p>
+    <div class="products-grid">
+
+      <a class="product-card" href="https://zovv.ai" target="_blank" rel="noopener">
+        <span class="card-corner"></span>
+        <div class="product-badge">Flagship · AI</div>
+        <div class="product-name">zovv<span class="tld">.ai</span></div>
+        <p class="product-desc">
+          An AI-native product pushing the frontier of what intelligent software can do. Built for real problems, designed without compromise.
+        </p>
+        <span class="product-link">Visit zovv.ai <span>→</span></span>
+      </a>
+
+      <div class="product-card future">
+        <span class="card-corner"></span>
+        <div class="product-badge neutral">Coming soon</div>
+        <div class="product-name" style="color:var(--ink-faint);">?<span class="tld" style="color:var(--ink-faint);">.__</span></div>
+        <p class="product-desc">The next product under WWStay Technologies is taking shape.</p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Philosophy -->
+  <section class="mission">
+    <p class="section-label">Philosophy</p>
+    <div class="mission-inner">
+      <blockquote class="mission-text">
+        "We believe in fewer things done extraordinarily well. Every product we build is independent in spirit, rigorous in execution, and meant to last."
+      </blockquote>
+      <p class="mission-attr">— WWStay Technologies</p>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-left">
+      © <span id="yr"></span> WWStay Technologies
+    </div>
+    <div class="footer-right">
+      <a href="https://zovv.ai" target="_blank" rel="noopener">zovv.ai</a>
+      <a href="mailto:hello@wwstay.tech">hello@wwstay.tech</a>
+    </div>
+  </footer>
+
+</div>
+<script>document.getElementById('yr').textContent = new Date().getFullYear();</script>
 </body>
 </html>
